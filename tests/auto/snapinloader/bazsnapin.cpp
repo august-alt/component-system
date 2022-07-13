@@ -18,44 +18,31 @@
 **
 ***********************************************************************************************************************/
 
-#ifndef MOCK_SNAP_IN_MANAGER_H
-#define MOCK_SNAP_IN_MANAGER_H
+#include "bazsnapin.h"
 
-#include "isnapin.h"
+#include <iostream>
 
-#include <QUuid>
-
-#include <gmock/gmock.h>
-
-namespace test
+namespace gpui
 {
-class MockSnapIn : public ::gpui::ISnapIn
+BazSnapIn::BazSnapIn()
+    : AbstractCompositeSnapIn("ISnapIn",
+                              "BazSnapIn",
+                              "Test snap-in.",
+                              {1, 0, 0},
+                              "GPL-2.0",
+                              "Copyright (C) 2022 BaseALT Ltd. <org@basealt.ru>")
 {
-public:
-    MOCK_METHOD0(onInitialize, void());
+    addDependency("NotExistSnapIn", {1, 0, 0});
+}
 
-    MOCK_METHOD0(onShutdown, void());
+void BazSnapIn::onInitialize()
+{
+    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+}
 
-    MOCK_CONST_METHOD0(getId, QUuid());
+void BazSnapIn::onShutdown()
+{
+    std::cout << std::string(__PRETTY_FUNCTION__) << std::endl;
+}
 
-    MOCK_CONST_METHOD0(getType, QString());
-
-    MOCK_CONST_METHOD0(getRootNode, QUuid());
-
-    MOCK_CONST_METHOD0(getDisplayName, QString());
-
-    MOCK_CONST_METHOD0(getHelpText, QString());
-
-    MOCK_CONST_METHOD0(getVersion, QVersionNumber());
-
-    MOCK_CONST_METHOD0(getLicense, QString());
-
-    MOCK_CONST_METHOD0(getCopyright, QString());
-
-    MOCK_CONST_METHOD0(getState, SnapInState());
-
-    MOCK_METHOD1(setState, void(SnapInState));
-};
-} // namespace test
-
-#endif //MOCK_SNAP_IN_MANAGER_H
+} // namespace gpui

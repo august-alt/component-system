@@ -23,8 +23,11 @@
 #include "plugin.h"
 #include "pluginstorage.h"
 
+#include "abstractsnapin.h"
 #include "isnapin.h"
 #include "isnapinmanager.h"
+
+#include <QMap>
 
 namespace gpui
 {
@@ -61,9 +64,53 @@ void SnapInLoader::loadSnapIns(const QDir &snapInDirectory)
             if (snapIn)
             {
                 d->manager->addSnapIn(snapIn);
+
+                snapIn->setState(LOADED);
             }
         }
     }
+
+    checkSnapInsDependencies();
+}
+
+void SnapInLoader::checkSnapInsDependencies()
+{
+    auto snapIns = d->manager->getSnapIns();
+
+    for (auto snapIn : snapIns)
+    {
+        ICompositeSnapIn *compositeSnapIn = dynamic_cast<ICompositeSnapIn *>(snapIn);
+        if (compositeSnapIn)
+        {
+            if (!checkDependecies(compositeSnapIn))
+            {
+                compositeSnapIn->setState(NO_DEPENDENCIES);
+            }
+        }
+    }
+}
+
+bool SnapInLoader::checkDependecies(ICompositeSnapIn *snapIn)
+{
+    auto dependencies = snapIn->getDependencies();
+
+    bool depFlag = false;
+
+    for (auto dependency : dependencies.toStdMap())
+    {
+        for (auto snapin : d->manager->getSnapIns())
+        {
+            if (QString::compare(dependency.first, snapin->getDisplayName()) == 0)
+            {
+                depFlag = (dependency.second == snapin->getVersion());
+            }
+        }
+        if (!depFlag)
+        {
+            return depFlag;
+        }
+    }
+    return depFlag;
 }
 
 } // namespace gpui

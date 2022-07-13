@@ -21,6 +21,8 @@
 #ifndef SNAP_IN_LOADER_H
 #define SNAP_IN_LOADER_H
 
+#include "abstractcompositesnapin.h"
+
 #include <QDir>
 
 namespace gpui
@@ -39,6 +41,9 @@ public:
 
 private:
     SnapInLoaderPrivate *d;
+
+    bool checkDependecies(ICompositeSnapIn *);
+    void checkSnapInsDependencies();
 };
 
 } // namespace gpui

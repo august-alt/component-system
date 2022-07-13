@@ -64,6 +64,7 @@ TEST_F(SnapInTest, SnapInConstructorTest)
     ASSERT_EQ(testSnapIn.getVersion(), snapInVersion);
     ASSERT_EQ(testSnapIn.getLicense(), snapInLicesnce);
     ASSERT_EQ(testSnapIn.getCopyright(), snapInCopyright);
+    ASSERT_EQ(testSnapIn.getState(), NONE);
 }
 
 class TestSettersSnapIn : public AbstractSnapIn
@@ -78,6 +79,7 @@ public:
         setLicense(snapInLicesnce);
         setCopyright(snapInCopyright);
         setRootNode(snapInId);
+        setState(LOADED);
     }
 
     void onInitialize(){};
@@ -97,6 +99,7 @@ TEST_F(SnapInTest, SnapInSettersTest)
     ASSERT_EQ(testSnapIn.getCopyright(), snapInCopyright);
     ASSERT_EQ(testSnapIn.getVersion(), snapInVersion);
     ASSERT_EQ(testSnapIn.getRootNode(), snapInId);
+    ASSERT_EQ(testSnapIn.getState(), LOADED);
 }
 
 } // namespace test

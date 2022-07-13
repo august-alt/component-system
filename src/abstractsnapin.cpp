@@ -33,6 +33,7 @@ public:
     QVersionNumber version{};
     QString license{};
     QString copyright{};
+    SnapInState state{};
 };
 
 QUuid AbstractSnapIn::getId() const
@@ -89,6 +90,7 @@ AbstractSnapIn::AbstractSnapIn(QString type,
     d->version   = version;
     d->license   = license;
     d->copyright = copyright;
+    d->state     = NONE;
 }
 
 AbstractSnapIn::~AbstractSnapIn()
@@ -124,6 +126,16 @@ void AbstractSnapIn::setLicense(QString license)
 void AbstractSnapIn::setCopyright(QString copyright)
 {
     d->copyright = copyright;
+}
+
+SnapInState AbstractSnapIn::getState() const
+{
+    return d->state;
+}
+
+void AbstractSnapIn::setState(const SnapInState newState)
+{
+    d->state = newState;
 }
 
 } // namespace gpui
