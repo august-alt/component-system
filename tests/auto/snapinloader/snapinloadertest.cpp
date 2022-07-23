@@ -41,18 +41,22 @@ TEST_F(SnapInLoaderTest, WidgetContainsValidSnapInAfterConstruction)
 {
     EXPECT_NO_FATAL_FAILURE(snapInLoader.loadSnapIns(QDir("./")));
 
-    try
-    {
-        EXPECT_EQ(manager.getSnapIns().size(), 2);
+    EXPECT_EQ(manager.getSnapIns().size(), 3);
 
-        EXPECT_EQ(manager.getSnapIns().front()->getDisplayName(), "BarSnapIn");
+    EXPECT_EQ(manager.getSnapIns().front()->getDisplayName(), "BarSnapIn");
 
-        EXPECT_EQ(manager.getSnapIns().back()->getDisplayName(), "FooSnapIn");
-    }
-    catch (std::exception &error)
-    {
-        std::cout << error.what() << std::endl;
-    }
+    EXPECT_EQ(manager.getSnapIns().back()->getDisplayName(), "FooSnapIn");
+}
+
+TEST_F(SnapInLoaderTest, SnapInStateAfterLoadAndCheckDepencies)
+{
+    EXPECT_NO_FATAL_FAILURE(snapInLoader.loadSnapIns(QDir("./")));
+
+    auto snapIns = manager.getSnapIns();
+
+    EXPECT_EQ(snapIns[0]->getState(), LOADED);
+    EXPECT_EQ(snapIns[1]->getState(), NO_DEPENDENCIES);
+    EXPECT_EQ(snapIns[2]->getState(), LOADED);
 }
 
 } // namespace test

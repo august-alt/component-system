@@ -21,6 +21,8 @@
 #ifndef _ISNAPIN_H
 #define _ISNAPIN_H
 
+#include "snapinstate.h"
+
 #include <QUuid>
 #include <QVersionNumber>
 
@@ -91,6 +93,16 @@ public:
      * @brief getCopyright Returns copyright of snap-in.
      */
     virtual QString getCopyright() const = 0;
+
+    /**
+     * @brief getState Return state of snap-in.
+     */
+    virtual SnapInState getState() const = 0;
+
+    /**
+     * @brief setState Sets state of the snap-in.
+     */
+    virtual void setState(const SnapInState) = 0;
 };
 
 } // namespace gpui

@@ -23,6 +23,7 @@
 
 #include "isnapin.h"
 #include "plugin.h"
+#include "snapinstate.h"
 
 #include <QUuid>
 #include <QVersionNumber>
@@ -52,6 +53,10 @@ public:
     QString getLicense() const override;
 
     QString getCopyright() const override;
+
+    SnapInState getState() const override;
+
+    void setState(const SnapInState) override;
 
 protected:
     AbstractSnapIn(QString type,

@@ -40,6 +40,7 @@ set(SOURCES
     snapinloader.cpp
     snapinmanagementwidget.cpp
     snapinmanager.cpp
+    snapinstate.h
 )
 
 set(UI_FORMS

@@ -17,45 +17,22 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 ***********************************************************************************************************************/
+#ifndef BAZ_SNAP_IN_H
+#define BAZ_SNAP_IN_H
 
-#ifndef MOCK_SNAP_IN_MANAGER_H
-#define MOCK_SNAP_IN_MANAGER_H
+#include "abstractcompositesnapin.h"
 
-#include "isnapin.h"
-
-#include <QUuid>
-
-#include <gmock/gmock.h>
-
-namespace test
+namespace gpui
 {
-class MockSnapIn : public ::gpui::ISnapIn
+class BazSnapIn final : public AbstractCompositeSnapIn
 {
 public:
-    MOCK_METHOD0(onInitialize, void());
+    BazSnapIn();
 
-    MOCK_METHOD0(onShutdown, void());
+    void onInitialize() override;
 
-    MOCK_CONST_METHOD0(getId, QUuid());
-
-    MOCK_CONST_METHOD0(getType, QString());
-
-    MOCK_CONST_METHOD0(getRootNode, QUuid());
-
-    MOCK_CONST_METHOD0(getDisplayName, QString());
-
-    MOCK_CONST_METHOD0(getHelpText, QString());
-
-    MOCK_CONST_METHOD0(getVersion, QVersionNumber());
-
-    MOCK_CONST_METHOD0(getLicense, QString());
-
-    MOCK_CONST_METHOD0(getCopyright, QString());
-
-    MOCK_CONST_METHOD0(getState, SnapInState());
-
-    MOCK_METHOD1(setState, void(SnapInState));
+    void onShutdown() override;
 };
-} // namespace test
+} // namespace gpui
 
-#endif //MOCK_SNAP_IN_MANAGER_H
+#endif // FOO_SNAP_IN_H

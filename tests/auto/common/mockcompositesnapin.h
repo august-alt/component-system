@@ -56,6 +56,10 @@ public:
     MOCK_CONST_METHOD0(getCopyright, QString());
 
     MOCK_CONST_METHOD0(getDependencies, QMap<QString, QVersionNumber>());
+
+    MOCK_CONST_METHOD0(getState, SnapInState());
+
+    MOCK_METHOD1(setState, void(SnapInState));
 };
 } // namespace test
 
